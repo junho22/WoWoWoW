@@ -1,0 +1,280 @@
+// CONSTS (상수)
+var CONST_XLEARN_SITE_URL = "https://canvas.donga.ac.kr/learningx";
+var CONST_COMMONS_SITE_URL = "https://cmaker.donga.ac.kr";
+var CONST_CATALOG_SITE_URL = "https://eclass.donga.ac.kr/";
+var CONST_HELP_COURSE_ID = 7;
+var GA_TRACK_ID = 'UA-123263193-33';
+var CUSTOM_CSS_VER = '0.0.1';
+
+$(".ic-Login__innerContent").css({
+    "background" : "rgba(255,255,255,0.6)",
+    "border" : "2px rgba(255,255,255,0.6)",
+});
+
+/************************************************/
+/* custom.css 로딩
+/************************************************/
+var cssId = 'learningx-custom-style';  // you could encode the css path itself to generate id..
+if (!document.getElementById(cssId))
+{
+    var head  = document.getElementsByTagName('head')[0];
+    var link  = document.createElement('link');
+    link.id   = cssId;
+    link.rel  = 'stylesheet';
+    link.type = 'text/css';
+    link.href = CONST_XLEARN_SITE_URL + '/customs/canvas/custom.css?v=' + CUSTOM_CSS_VER;
+    link.media = 'all';
+    head.appendChild(link);
+}
+
+
+/************************************************/
+/* Canvas Global Menu 작업 처리
+/************************************************/
+
+// 로고를 LearningX의 메인 페이지로 링크 연결
+$(".ic-app-header__logomark").attr("href", CONST_CATALOG_SITE_URL);
+
+// Global Navigation에 이용안내 메뉴 연결
+var helpLang = {
+    'ko': '이용안내',
+    'en': 'Help',
+    'ja': 'ご利用案内',
+    'zh-Hant': '使用指南',
+    'zh-Hans': '使用指南'
+};
+
+var selectedHelpLang = helpLang['en'];
+if (typeof helpLang[ENV.LOCALE]  !== 'undefined') selectedHelpLang = helpLang[ENV.LOCALE];
+
+var helpMenu =
+    '<li class="menu-item ic-app-header__menu-list-item">' +
+    '<a id="global_nav_profile_link" href="/courses/' + CONST_HELP_COURSE_ID + '" class="ic-app-header__menu-list-link">' +
+    '<div class="menu-item-icon-container" aria-hidden="true">' +
+    '<img src="' + CONST_XLEARN_SITE_URL + '/customs/canvas/help_icon.png">' +
+    '</div>' +
+    '<div class="menu-item__text">' + selectedHelpLang + '</div>' +
+    '</a>' +
+    '</li>';
+
+$(".ic-app-header__main-navigation .ic-app-header__menu-list").append(helpMenu);
+
+/************************************************/
+/* IE 공지사항 오류 대응
+/************************************************/
+
+function isIE() {
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+
+    return (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./));
+}
+
+$(document).ajaxComplete(function (event, xhr, settings) {
+    var courseId = ENV.COURSE_ID;
+    if (courseId == undefined) {
+        if (ENV.COURSE != undefined) courseId = ENV.COURSE.id;
+    }
+    // IE 공지사항 한줄 늘어나는 문제 대응
+    if (isIE() && settings.url.indexOf('/api/v1/courses/' + courseId) !== -1) {
+        setTimeout(function() {
+            $('.ic-announcement-row').find('.ic-item-row__content-col').css('width', 'calc(100% - 230px)');
+        }, 500);
+    }
+});
+
+/************************************************/
+/* 로그아웃 연동
+/************************************************/
+
+$(document).ready(function() {
+    // canvas 로그아웃 할 때 자동 로그아웃 처리함
+    $("#global_nav_profile_link").on('click', function() {
+        if ($(this).parents('li').hasClass("ic-app-header__menu-list-item--active")) {
+            setTimeout(function() {
+
+                var submitted = false;
+                $("form").on("submit", function(event) {
+                    if (submitted) return;
+                    submitted = true;
+
+                    event.preventDefault();
+
+                    // Catalog 로그아웃 수행
+                    document.location.href = CONST_CATALOG_SITE_URL + '/logout';
+                });
+            }, 500);
+        }
+    });
+});
+
+
+/************************************************/
+/* 사용자 소속 정보 표시
+/************************************************/
+
+// 과목 내 사용자 및 그룹에서 소속 정보를 표시한다.
+if ($.inArray('teacher', ENV['current_user_roles']) > -1) {
+
+    $(document).ajaxComplete(function (event, xhr, settings) {
+        if (settings.url.indexOf('/api/v1' + ENV.COURSE_ROOT_URL + '/users?') !== -1 && settings.url.indexOf('include_inactive=true') !== -1) {
+            var lang = {
+                'ko': '학과',
+                'en': 'Department',
+                'ja': '学科',
+                'zh-Hant': '教训',
+                'zh-Hans': '教訓'
+            };
+
+            var selectedLang = lang['en'];
+            if (typeof lang[ENV.LOCALE]  !== 'undefined') selectedLang = lang[ENV.LOCALE];
+
+            var pageIdx = 1;
+            var myRe = /&page=(\d+)/g;
+            var myArray = myRe.exec(settings.url);
+            if (myArray != null) pageIdx = parseInt(myArray[1]);
+
+            if (pageIdx == 1) {
+                $(".roster.ic-Table thead th").eq(3).after("<th>" +selectedLang + "</th>");
+            }
+
+            var canvasUsers = JSON.parse(xhr.responseText);
+            var loginIds = [];
+
+            for (var i = canvasUsers.length - 1; i >= 0; i--) {
+                var user = canvasUsers[i];
+                loginIds.push(user.login_id);
+
+                $('.collectionViewItems tr').eq(i + (50 * (pageIdx - 1))).find('td').eq(3).after("<td></td>");
+            }
+
+            var courseId = ENV.course.id;
+
+            $.ajax({
+                type : "GET",
+                url : CONST_XLEARN_SITE_URL + "/api/v1/courses/" + courseId + "/users/detail",
+                data : { keywards : loginIds.toString() },
+                dataType : "json",
+                success: function(response) {
+                    $('.collectionViewItems tr').each(function(i) {
+                        var loginId = $(this).find('td').eq(2).text();
+                        loginId = loginId.trim();
+
+                        for (var j = 0; j < response.length; j++) {
+                            var user = response[j];
+                            if (loginId != user.user_login) continue;
+
+                            if (!user.dept_name) user.dept_name = '';
+                            $(this).find('td').eq(4).html(user.dept_name);
+                        }
+                    });
+                }
+            });
+        }
+    });
+}
+
+// In Google Analytics you'll need to set up custom dimensions as follows
+// Custom Dimension 1 = Canvas User ID --- Scope = User
+// Custom Dimension 2 = Archived --- Scope = User
+// Custom Dimension 3 = Canvas User Role --- Scope = User
+// Custom Dimension 4 = Canvas Course ID --- Scope = Hit
+// Custom Dimension 5 = Canvas Course Name --- Scope = Hit
+// Custom Dimension 6 = Canvas Sub-Account ID --- Scope = Hit
+
+(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+    m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+$(document).ready(function () {
+
+    // START - More Google Analytics Tracking Code
+    var sUserId
+    var sUserRole
+    var sTemp // Course ID from URL
+    var _course
+    var sCourseName = null
+    var parent_account //Give you the subaccount_id that the course is in
+
+    ////////////////// CHANGE UA # HERE /////////////////////
+    ga('create', GA_TRACK_ID, 'auto');
+
+    //Get User Information
+    sUserId = ENV["current_user_id"]
+    ga('set', 'dimension1', sUserId);
+
+
+    //Get User Role
+    if ($.inArray('admin', ENV['current_user_roles']) == -1 && $.inArray('teacher', ENV['current_user_roles']) == -1 && $.inArray('student', ENV['current_user_roles']) > -1) {
+        sUserRole = "student"
+    } else if ($.inArray('admin', ENV['current_user_roles']) == -1 && $.inArray('teacher', ENV['current_user_roles']) > -1) {
+        sUserRole = "teacher"
+    } else if ($.inArray('admin', ENV['current_user_roles']) > -1) {
+        sUserRole = "admin"
+    } else {
+        sUserRole = "other"
+    }
+
+    ga('set', 'dimension3', sUserRole);
+
+    //If the user is in a course
+    try {
+        sTemp = window.location.pathname.match(/\/courses\/(\d+)/);
+        if (sTemp[1]) {
+
+            //Get Course information - Course Name and parent sub-account id
+            var d1 = $.get('/api/v1/courses/' + sTemp[1], function (_course) {
+                parent_account = _course.account_id
+                parent_account = parent_account.toString();
+                sCourseName = _course.name
+            });
+
+
+            $.when(d1).done(function (_account) {
+                // ...do stuff...
+                ga('set', 'dimension4', sTemp[1]);
+                ga('set', 'dimension5', sCourseName);
+                ga('set', 'dimension6', parent_account);
+                ga('send', 'pageview');
+            });
+        } else {
+            ga('send', 'pageview');
+        }
+    } catch (err) {}
+
+    // END - Google Analytics Tracking Code
+
+});
+
+$(document).ready(function() {
+  // 퀴즈 미리보기 밑에 안내 문구를 추가한다.
+  try {
+    var courseMatch = window.location.pathname.match(
+      /\/courses\/(\d+)\/quizzes\/(\d+)/
+    );
+
+    if (courseMatch) {
+      $('.preview_quiz_button > #preview_quiz_button').after('<p style="width:70%;margin: 0 auto;color:#0B7BF9;text-align: left;font-size:14px;margin-top:15px;">※ 하단의 ‘미리보기’버튼은 <u>테스트 학생으로서 풀이해 보는 기능</u>입니다.<br/>이 버튼으로 미리보기를 하는 경우, 가상의 테스트 학생 응시 기록으로 남게 되어 퀴즈 공개 전이라도 학습자의 응시한 기록이 있다는 안내가 표시될 수 있으나, 실제 학생이 풀이한 기록은 아니므로 안심하시기 바랍니다.<br/><br/>만약 테스트 응시 기록을 남기지 않고 확인하고자 하시는 경우 <u>우측 상단의 <b>‘미리보기’</b></u> 기능을 이용하실 수 있습니다.</p>')
+    }
+  } catch (error) {}
+
+  // canvas 사용자 설정 페이지에서 이메일 주소, 연락처 추가하는 버튼을 없앤다.
+  try {
+        if (window.location.pathname === "/profile/settings") {
+          // 이메일이 하나만 있는 경우 이메일 추가 버튼 없애줌
+          $('.single.channel_list.email_channels.ic-Table.ic-Table--condensed > tbody > tr:last-of-type').hide()
+          // 이메일이 두개 이상 있는 경우 이메일 추가 버튼 없애줌
+          $('.channel_list.email_channels.ic-Table.ic-Table--condensed > tbody > tr:last-of-type').hide()
+          // 연락처 추가하는 블록 전체를 없앰
+          $('.channel_list.other_channels.ic-Table.ic-Table--condensed').hide()
+        }
+  } catch (error) {}
+});

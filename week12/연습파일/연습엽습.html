@@ -1,0 +1,206 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="robots" content="index,nofollow"/>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- og:tag -->
+<link rel="canonical" href="http://land.naver.com">
+<meta property="og:site_name" content="land" />
+<meta property="og:title" content="네이버 부동산" />
+<meta property="og:type" content="article" />
+<meta property="og:description" content="내 집 마련의 시작, 네이버 부동산" />
+<meta name="description" content="내 집 마련의 시작, 네이버 부동산">
+<meta property="og:image" content="https://landthumb-phinf.pstatic.net/20201030_229/land_naver_1604037626049TB83t_PNG/%B3%D7%C0%CC%B9%F6_%BA%CE%B5%BF%BB%EA.png"/>
+<meta property="og:article:author" content="네이버 부동산" />
+<meta property="og:url" content="https://land.naver.com/index.nhn" />
+<meta property="og:article:author:url" content="http://land.naver.com/" />
+<!-- //og:tag -->
+<title>네이버 부동산</title>
+<link rel="stylesheet" href="https://ssl.pstatic.net/static.land/static/service/css/202111181357/min/home/land_home.css" type="text/css"><script type="text/javascript">	document.domain = 'naver.com';</script>
+</head>
+<body class="">
+	<div id="wrap">
+		<div id="u_skip">
+		  <a href="#lnb" onclick="document.getElementById('lnb').tabIndex = -1;document.getElementById('lnb').focus();return false;"><span>메인 메뉴로 바로가기</span></a>
+		  <a href="#container" onclick="document.getElementById('container').tabIndex = -1;document.getElementById('container').focus();return false;"><span>하위 메뉴로 바로가기</span></a>
+		  <a href="#content" onclick="document.getElementById('content').tabIndex = -1;document.getElementById('content').focus();return false;"><span>본문으로 바로가기</span></a>
+		</div>		
+		<!-- header -->
+<script src="https://ssl.pstatic.net/static.land/static/service/js/202111181357/lib/lcslog.js" type="text/javascript"></script><script src="https://ssl.pstatic.net/tveta/libs/glad/prod/gfp-core.js"></script>
+<script>
+	window.gladsdk = window.gladsdk || { cmd: [] };
+</script>
+<script type="text/javascript" src="https://wcs.naver.net/wcslog.js"></script>
+<script type="text/javascript">
+	lcs_do();
+
+	if(!wcs_add) var wcs_add = {};
+	wcs_add["wa"] = "60717a12f2b3c8";
+	if(typeof wcs_do !== 'undefined') wcs_do();
+</script>
+	<div id="header" class="header_one" >
+		<div class="gnb_wrap">
+            <div class="inner_wrap">
+                <div class="item_area NE=a:STA">
+                    <h1 class="logo_area">
+                        <a href="http://www.naver.com/" class="logo_naver NPI=a:naverlogo"><i class="icon">NAVER</i></a>
+                        <a href="http://land.naver.com/" class="logo_land NPI=a:land"><i class="icon">부동산</i></a>
+                    </h1>
+                    <div class="inner_gnb_search">
+                        <h2 class="blind">검색영역</h2>
+                        <fieldset>
+                            <legend>검색</legend>
+							<!-- [D] 입력위해 focus 가지면 sta_text_ovr 추가 -->
+							<input type="hidden" name="where" value="nexearch" />
+							<input type="hidden" name="sm" value="top_hty" />
+							<input type="hidden" name="fbm" value="1" />
+							<input type="hidden" name="query" id="serviceInternalSearchQuery" value="" />
+							<input type="hidden" name="internalSearchURL" id="internalSearchURL" value="https://land.naver.com" />
+							<input type="text" title="검색" id="queryInputHeader" value='' query='' onKeyUp="serviceInternalSearchEnterCheck(event,0);" accesskey="s" searchAreaClicked="false" searchType="Promotion" class="search_input sta_search_text" onFocus="searchInputBoxFocus(this);">
+							<a href="#" class="search_button type_inside NPI=a:search" onclick="serviceInternalSearch();return false;"><i class="icon">검색</i></a>
+                            <a href="#" class="search_button type_integration NPI=a:nx" onclick="serviceInternalTotalSearch();return false;" title="새창 열림"><i class="icon">통합검색</i></a>
+                        </fieldset>
+                    </div>
+                </div>
+				<div class="gnb_area">
+					<div id="gnb">
+						<script type="text/javascript" charset="utf-8" src="https://ssl.pstatic.net/static.gn/templates/gnb_utf8.nhn?20211128"></script>
+					</div>
+				</div>
+            </div>
+        </div>
+		<div class="nav_wrap" id="lnb">
+			<h2 class="blind">메인메뉴</h2>
+			<div class="inner_wrap">
+				<!-- [D] 활성화 클래스 on -->
+				<ul class="nav_list NE=a:LNB">
+					<li class="menu main_home on">
+										<a href="/" class="NPI=a:home">부동산홈</a>
+									</li>
+									<li class="menu main_article_beta">
+										<a href="https://new.land.naver.com/complexes" class="NPI=a:article_beta">매물베타</a>
+									</li>
+								<li class="menu main_isale">
+										<a href="https://isale.land.naver.com/iSale/Map/" class="NPI=a:sale">분양</a>
+									</li>
+								<li class="menu main_news">
+										<a href="/news/" class="NPI=a:news">뉴스</a>
+									</li>
+								<li class="menu main_community">
+										<a href="/community/" class="NPI=a:community">커뮤니티</a>
+									</li>
+								<li class="menu main_auction">
+										<a href="/auction/" class="NPI=a:auction">경매</a>
+									</li>
+								<li class="menu main_mypage">
+										<a href="https://new.land.naver.com/interests" class="NPI=a:mypage">MY페이지</a>
+									</li>
+								<!--[if lte IE 9]>
+						<li id="_ieVerCheck" class="hidden ie9"></li>
+					<![endif]-->
+				</ul>
+				<div class="button_area NE=a:LNB">
+					<a href="http://landad.naver.com/" target="_blank" class="type_admin NPI=a:landad">부동산관리센터</a>
+					</div>
+			</div>
+		</div>
+		</div>
+	<!-- //header -->
+<div id="container">
+			<script>nsc="land.home";</script>
+	<div class="banner type_performance" id="_home_smart_banner"></div>
+	<div class="spot_wrap">
+		<div class="spot">
+			<div class="map">
+				<div class="map_top NE=a:pf1 type_new">
+					<ul class="cate">
+					<div id="top_rlet_tp">
+						<li class="m91"><a href="javascript:void(0);" class="selected" tpcd="Z01" btnid="m91">아파트·오피스텔</a></li>
+						<li class="m92"><a href="javascript:void(0);" class="" tpcd="Z02" btnid="m92">빌라·주택</a></li>
+						<li class="m93"><a href="javascript:void(0);" class="" tpcd="Z03" btnid="m93">원룸·투룸</a></li>
+						<li class="m94"><a href="javascript:void(0);" class="" tpcd="Z04" btnid="m94">상가·업무·토지</a></li>
+					</div>
+					<div id="top_trad_tp">
+						<li class="m95"><a href="javascript:void(0);" class="selected NPI=a:all" tpcd="all" btnid="m95">전체</a></li>
+						<li class="m96"><a href="javascript:void(0);" class=" NPI=a:sale" tpcd="A1" btnid="m96">매매</a></li>
+						<li class="m97"><a href="javascript:void(0);" class=" NPI=a:rent" tpcd="B1" btnid="m97">전세</a></li>
+						<li class="m98"><a href="javascript:void(0);" class=" NPI=a:monthly" tpcd="B2" btnid="m98">월세</a></li>
+						<li class="m99"><a href="javascript:void(0);" class="" tpcd="B3" btnid="m99">단기임대</a></li>
+					</div>
+					</ul>
+					<!-- [D] 리스트보기 클래스 : list, 지도로 보기 클래스 : map -->
+					<!--[if gte IE 9]><!-->
+						<p class="btn NE=a:pf1"><a href="javascript:void(0);" class="list NPI=a:listview">리스트로 보기</a></p>
+					<!--<![endif]-->
+				</div>
+				<!-- 맵 출력 영역-->
+				<div class="map_view" id="map_view"></div>
+				<!-- //맵 출력 영역-->
+				<div class="location">
+					<div class="loc_view">
+						<div id="loc_view1" class="sel w ">
+							<select class="selectbox-source" style="position:absolute; top : -1000px; left:-1000px;" title="시/도">
+								<option value="1100000000" xcrdn="126.977872" ycrdn="37.566427" >서울시</option>
+								<option value="4100000000" xcrdn="127.008689" ycrdn="37.274939" >경기도</option>
+								<option value="2800000000" xcrdn="126.705151" ycrdn="37.456054" >인천시</option>
+								<option value="2600000000" xcrdn="129.075413" ycrdn="35.180143" selected>부산시</option>
+								<option value="3000000000" xcrdn="127.384953" ycrdn="36.350465" >대전시</option>
+								<option value="2700000000" xcrdn="128.601763" ycrdn="35.87139" >대구시</option>
+								<option value="3100000000" xcrdn="129.311375" ycrdn="35.5386" >울산시</option>
+								<option value="3600000000" xcrdn="127.292375" ycrdn="36.592907" >세종시</option>
+								<option value="2900000000" xcrdn="126.851338" ycrdn="35.160032" >광주시</option>
+								<option value="4200000000" xcrdn="127.72975" ycrdn="37.885399" >강원도</option>
+								<option value="4300000000" xcrdn="127.491238" ycrdn="36.636149" >충청북도</option>
+								<option value="4400000000" xcrdn="126.68957" ycrdn="36.63629" >충청남도</option>
+								<option value="4700000000" xcrdn="128.437796" ycrdn="36.518504" >경상북도</option>
+								<option value="4800000000" xcrdn="128.6924" ycrdn="35.238343" >경상남도</option>
+								<option value="4500000000" xcrdn="127.108875" ycrdn="35.820433" >전라북도</option>
+								<option value="4600000000" xcrdn="126.462443" ycrdn="34.816358" >전라남도</option>
+								<option value="5000000000" xcrdn="126.498238" ycrdn="33.488976" >제주도</option>
+								</select>
+							<div class="selectbox-box"><div class="selectbox-label" tabindex="0">부산시</div></div>
+							<div class="selectbox-layer"><div class="selectbox-list"></div></div>
+						</div>
+						<span class="bar">&gt;</span>
+						<div id="loc_view2" class="sel w2 ">
+							<select class="selectbox-source" style="position:absolute; top : -1000px; left:-1000px;" title="시/군/구">
+								<option class="selectbox-default">시&frasl;군&frasl;구</option>
+								<option value="2644000000" xcrdn="128.980525" ycrdn="35.212035" >강서구</option>
+								<option value="2641000000" xcrdn="129.0921" ycrdn="35.243068" >금정구</option>
+								<option value="2671000000" xcrdn="129.222173" ycrdn="35.244507" >기장군</option>
+								<option value="2629000000" xcrdn="129.084175" ycrdn="35.136649" >남구</option>
+								<option value="2617000000" xcrdn="129.0569" ycrdn="35.13904" >동구</option>
+								<option value="2626000000" xcrdn="129.083625" ycrdn="35.205001" >동래구</option>
+								<option value="2623000000" xcrdn="129.053137" ycrdn="35.162874" >부산진구</option>
+								<option value="2632000000" xcrdn="128.990438" ycrdn="35.197185" >북구</option>
+								<option value="2653000000" xcrdn="128.99125" ycrdn="35.152624" >사상구</option>
+								<option value="2638000000" xcrdn="128.974763" ycrdn="35.104476" >사하구</option>
+								<option value="2614000000" xcrdn="129.023425" ycrdn="35.097582" >서구</option>
+								<option value="2650000000" xcrdn="129.113075" ycrdn="35.14564" >수영구</option>
+								<option value="2647000000" xcrdn="129.079762" ycrdn="35.176235" >연제구</option>
+								<option value="2620000000" xcrdn="129.067875" ycrdn="35.091199" >영도구</option>
+								<option value="2611000000" xcrdn="129.032338" ycrdn="35.10619" >중구</option>
+								<option value="2635000000" xcrdn="129.1637" ycrdn="35.163207" >해운대구</option>
+								</select>
+							<div class="selectbox-box"><div class="selectbox-label" tabindex="0">시&frasl;군&frasl;구</div></div>
+							<div class="selectbox-layer"><div class="selectbox-list"></div></div>
+						</div>
+						<span class="bar" id="loc_view3_bar" style="display:none">&gt;</span>
+						<div id="loc_view3" class="sel w " style="display:none">
+							<select class="selectbox-source" style="position:absolute; top : -1000px; left:-1000px;" title="읍/면/동">
+								<option class="selectbox-default">읍&frasl;면&frasl;동</option>
+								</select>
+							<div class="selectbox-box"><div class="selectbox-label" tabindex="0">읍&frasl;면&frasl;동</div></div>
+							<div class="selectbox-layer"><div class="selectbox-list"></div></div>
+						</div>
+					</div>
+					<div class="lastest">
+						<p>최근 검색한 지역과 단지 <a href="javascript:void(0);" title="최근검색한 지역과 단지">펼치기</a></p>
+						<div class="list_wrap" style="display:none;" id="recentComplexList">
+							<ol style="padding:4px 0 0 11px;width:147px;height:17px;color:#666"><li>지역과 단지가 없습니다.</li></ol></div>
